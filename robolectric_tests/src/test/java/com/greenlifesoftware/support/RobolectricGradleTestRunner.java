@@ -8,9 +8,6 @@ import org.robolectric.res.Fs;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Custom test runner which is needed if your tests need resources etc.
- */
 public class RobolectricGradleTestRunner extends RobolectricTestRunner {
 
     private static final String PROJECT_DIR = getProjectDirectory();
