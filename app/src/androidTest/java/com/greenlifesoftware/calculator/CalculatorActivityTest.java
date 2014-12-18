@@ -1,8 +1,6 @@
 package com.greenlifesoftware.calculator;
 
-import android.app.Activity;
-
-import com.greenlifesoftware.calculator.support.RobojavaTestRunner;
+import com.greenlifesoftware.calculator.support.RobolectricGradleTestRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +11,7 @@ import org.robolectric.annotation.Config;
 import static org.junit.Assert.*;
 
 @Config(emulateSdk = 18)
-@RunWith(RobojavaTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
 
 public class CalculatorActivityTest {
 

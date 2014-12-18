@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Custom test runner which is needed if your tests need resources etc.
  */
-public class RobojavaTestRunner extends RobolectricTestRunner {
+public class RobolectricGradleTestRunner extends RobolectricTestRunner {
 
     private static final String PROJECT_DIR = getProjectDirectory();
     private static final String MANIFEST_PROPERTY = PROJECT_DIR + "src/main/AndroidManifest.xml";
@@ -19,7 +19,7 @@ public class RobojavaTestRunner extends RobolectricTestRunner {
     private static final int TARGET_SDK_VERSION = 18;
     private static final AndroidManifest sAndroidManifest = getAndroidManifest();
 
-    public RobojavaTestRunner(final Class<?> testClass) throws Exception {
+    public RobolectricGradleTestRunner(final Class<?> testClass) throws Exception {
         super(testClass);
     }
 
