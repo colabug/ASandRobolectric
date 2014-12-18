@@ -6,11 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.*;
 
-@Config(emulateSdk = 18)
 @RunWith(RobolectricGradleTestRunner.class)
 
 public class CalculatorActivityTest {
