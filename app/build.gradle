@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'robolectric'
 
 android {
     compileSdkVersion 21
@@ -20,6 +21,15 @@ android {
 }
 
 dependencies {
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile('org.robolectric:robolectric:2.4') {
+        exclude group: "commons-logging", module: "commons-logging"
+        exclude group: "org.apache.httpcomponents", module: "httpclient"
+    }
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+}
+
+robolectric {
+    include "com/greenlifesoftware/**/*Test.class"
 }

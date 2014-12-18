@@ -1,12 +1,11 @@
 package com.greenlifesoftware.calculator;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
-public class CalculatorActivity extends ActionBarActivity {
+public class CalculatorActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
