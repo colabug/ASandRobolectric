@@ -2,8 +2,8 @@ package com.greenlifesoftware.support;
 
 import org.robolectric.AndroidManifest;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.res.Fs;
 import org.robolectric.annotation.Config;
+import org.robolectric.res.Fs;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,8 +48,9 @@ public class RobolectricGradleTestRunner extends RobolectricTestRunner {
         try {
             File file = new File(".");
             path = file.getCanonicalPath();
-            path = path.replace("robolectric_tests", ""); //name of test project
-            path = path + "app/"; //name of android project
+            path = path.replace("robolectric_tests", ""); //name of stub project
+            path = path.replace("app", "");
+            path = path + "/app/"; //name of android project
         } catch (IOException ignored) {
         }
         return path;
