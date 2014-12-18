@@ -914,3 +914,6 @@ android.content.res.Resources$NotFoundException: unknown resource 2130903063
 ```
 
 Went back to original project. Doesn't build from the command line or from AS in the provided example. Reached out again via Twitter.
+
+## Rejoyce!
+Turns out there was a bug with the plugin. He fixed and I integrated the fix. I commited and pushed.
