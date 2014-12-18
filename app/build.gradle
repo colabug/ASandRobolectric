@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.greenlifesoftware.calculator"
         minSdkVersion 12
-        targetSdkVersion 21
+        targetSdkVersion 18
         versionCode 1
         versionName "1.0"
     }
