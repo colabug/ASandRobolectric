@@ -1,7 +1,5 @@
 package com.greenlifesoftware.calculator;
 
-import android.app.Activity;
-
 import com.greenlifesoftware.calculator.support.RobojavaTestRunner;
 
 import org.junit.Before;
@@ -9,19 +7,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
-
 import static org.junit.Assert.*;
 
 @Config(emulateSdk = 18)
 @RunWith(RobojavaTestRunner.class)
-
-public class CalculatorActivityTest {
-
-    private CalculatorActivity activity;
+public class NewActivityTest {
+    private NewActivity activity;
 
     @Before
     public void setUp() throws Exception {
-        activity = Robolectric.buildActivity(CalculatorActivity.class).create().get();
+        activity = Robolectric.buildActivity(NewActivity.class).create().get();
     }
 
     @Test
@@ -30,8 +25,8 @@ public class CalculatorActivityTest {
     }
 
     @Test
-    public void shouldHaveWelcomeText() throws Exception {
-        assertNotNull(activity.findViewById(R.id.welcome_text));
+    public void shouldHaveNewText() throws Exception {
+        assertNotNull(activity.findViewById(R.id.new_text));
 
     }
 }
