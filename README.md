@@ -1,8 +1,10 @@
 # Robolectric with Android Studio 1.0
 
-[Source](http://blog.blundell-apps.com/android-gradle-app-with-robolectric-junit-tests/)
+Using these [instructions](http://blog.blundell-apps.com/android-gradle-app-with-robolectric-junit-tests/) to manually configure the a new application (created with the wizard).
 
-Note: The module view changed, screen shot captured.
+## Create module
+
+> Note: The module view changed, screen shot captured.
 
 **TODO: Insert pictures**
 
@@ -21,6 +23,8 @@ Could not resolve all dependencies for configuration ':robolectric_tests:testCom
       Calculator:robolectric_tests:unspecified > org.robolectric:robolectric:2.3
 ```
 
+## Update Dependencies
+
 Need to update the dependencies to exclude this library:
 
 ```java
@@ -28,6 +32,8 @@ Need to update the dependencies to exclude this library:
         exclude module: 'support-v4'
     }
 ```
+
+## Error: `"superClassName is empty"`
 
 Another failure!
 
@@ -46,6 +52,7 @@ Execution failed for task ':robolectric_tests:test'.
 ```
 
 Fix:
+
 ```java
 // Prevents the "superClassName is empty" error for classes not annotated as tests
 tasks.withType(Test) {
@@ -53,6 +60,8 @@ tasks.withType(Test) {
     include "**/*Test.class"
 }
 ```
+
+## Error: `Expecting a stackmap frame`
 
 More errors!
 
@@ -80,9 +89,7 @@ Exception Details:
     ...
 ```
 
-[Solution](https://github.com/robolectric/robolectric/issues/1332)
-
-When I use this solution, I get a [new error](https://github.com/robolectric/robolectric/issues/979):
+Found possible [solution](https://github.com/robolectric/robolectric/issues/1332). Gives me [new error](https://github.com/robolectric/robolectric/issues/979):
 
 ```
 tasks.withType(Test) {
@@ -95,6 +102,8 @@ tasks.withType(Test) {
     }
 }
 ```
+
+## Latest Robolectric
 
 Updgraded to 2.4 and aded maven central to the build repository options.
 
@@ -121,6 +130,8 @@ java.lang.RuntimeException: Could not find any resource  from reference ResName{
 ```
 
 Back to this [article](https://github.com/robolectric/robolectric/issues/1332)
+
+## Max SDK 18
 
 Added emulation:
 
@@ -167,6 +178,8 @@ defaultConfig {
 }
 ```
 
+## `ShadowMenuInflater`
+
 Trying this workaround suggestion:
 
 Use a shadow.
@@ -178,6 +191,7 @@ Use a shadow.
 ```
 
 `SupportMenuInflater.java`
+
 ```java
   import org.robolectric.annotation.Implementation;
   import org.robolectric.annotation.Implements;
@@ -197,7 +211,9 @@ Use a shadow.
 
 Didn't work.
 
-Removed the theme in the `styles.xml` file and got more issues.
+## Hacks
+
+Removed the theme in the `styles.xml` file and got more issues. Take a nap.
 
 ## Test Runer
 
@@ -262,6 +278,8 @@ public class CalculatorActivityTest {
     }
 }
 ```
+
+## Plugin Test Runner
 
 Used test runner from the plugin instead:
 
@@ -331,53 +349,12 @@ java.lang.RuntimeException: java.lang.RuntimeException: /Users/colabug/AndroidSt
     at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
     at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
     at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
-    at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
-    at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
-    at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
-    at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
-    at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
-    at org.robolectric.RobolectricTestRunner$1.evaluate(RobolectricTestRunner.java:158)
-    at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
-    at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecuter.runTestClass(JUnitTestClassExecuter.java:86)
-    at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecuter.execute(JUnitTestClassExecuter.java:49)
-    at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassProcessor.processTestClass(JUnitTestClassProcessor.java:69)
-    at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.processTestClass(SuiteTestClassProcessor.java:48)
-    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-    at java.lang.reflect.Method.invoke(Method.java:606)
-    at org.gradle.messaging.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
-    at org.gradle.messaging.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
-    at org.gradle.messaging.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:32)
-    at org.gradle.messaging.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:93)
-    at com.sun.proxy.$Proxy2.processTestClass(Unknown Source)
-    at org.gradle.api.internal.tasks.testing.worker.TestWorker.processTestClass(TestWorker.java:105)
-    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-    at java.lang.reflect.Method.invoke(Method.java:606)
-    at org.gradle.messaging.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
-    at org.gradle.messaging.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
-    at org.gradle.messaging.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:360)
-    at org.gradle.internal.concurrent.DefaultExecutorFactory$StoppableExecutorImpl$1.run(DefaultExecutorFactory.java:64)
-    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-    at java.lang.Thread.run(Thread.java:745)
-Caused by: java.lang.RuntimeException: /Users/colabug/AndroidStudioProjects/Calculator/robolectric_tests/app/src/main/AndroidManifest.xml not found or not a file; it should point to your project's AndroidManifest.xml
-    at org.robolectric.AndroidManifest.validate(AndroidManifest.java:134)
-    at org.robolectric.AndroidManifest.getResourcePath(AndroidManifest.java:516)
-    at org.robolectric.AndroidManifest.getIncludedResourcePaths(AndroidManifest.java:522)
-    at org.robolectric.RobolectricTestRunner.createAppResourceLoader(RobolectricTestRunner.java:635)
-    at org.robolectric.RobolectricTestRunner.getAppResourceLoader(RobolectricTestRunner.java:627)
-    at org.robolectric.internal.ParallelUniverse.setUpApplicationState(ParallelUniverse.java:67)
-    at org.robolectric.RobolectricTestRunner.setUpApplicationState(RobolectricTestRunner.java:440)
-    at org.robolectric.RobolectricTestRunner$2.evaluate(RobolectricTestRunner.java:222)
-    ... 35 more
+...
 ```
 
-This runner hard codes a different path than where my things live.
+This runner may need to be hacked to change the code paths since the layout is different.
 
-Let's hack the string ourselves. I debugged the check task and put a break point here (changed to my project specifics):
+I tried hacking the string myself. I debugged the check task and added a break point here (changed to my project specifics):
 
 ```java
 File file = new File(".");
@@ -386,20 +363,118 @@ path = path.replace("robolectric_test", ""); //name of stub project
 path = path + "/app/"; //name of android project
 ```
 
-path = `/Users/colabug/AndroidStudioProjects/Calculator/robolectric_tests`
-path after sub = `/Users/colabug/AndroidStudioProjects/Calculator/robolectric_tests/app/`
+Turns out there was a bug with the test runner, so I integrated the updated version.
 
-Need to get rid of the `robolectric_tests` portion.
+File:
 
-Changed the test runner:
+```
+package com.greenlifesoftware.support;
 
-```java
-File file = new File(".");
-path = file.getCanonicalPath();
-path = path.replace("robolectric_tests", ""); //name of test project
-path = path + "app/"; //name of android project
+import org.robolectric.AndroidManifest;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
+import org.robolectric.res.Fs;
+
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * Custom test runner which is needed if your tests need resources etc.
+ */
+public class RobolectricGradleTestRunner extends RobolectricTestRunner {
+
+    private static final String PROJECT_DIR = getProjectDirectory();
+    private static final String MANIFEST_PROPERTY = PROJECT_DIR + "src/main/AndroidManifest.xml";
+    private static final String RES_PROPERTY = PROJECT_DIR + "build/intermediates/res/debug/";
+    private static final int TARGET_SDK_VERSION = 18;
+    private static final AndroidManifest sAndroidManifest = getAndroidManifest();
+
+    public RobolectricGradleTestRunner(final Class<?> testClass) throws Exception {
+        super(testClass);
+    }
+
+    @Override
+    public AndroidManifest getAppManifest(Config config) {
+        return sAndroidManifest;
+    }
+
+    private static AndroidManifest getAndroidManifest() {
+        return new AndroidManifest(Fs.fileFromPath(MANIFEST_PROPERTY), Fs.fileFromPath(RES_PROPERTY)) {
+            @Override
+            public int getTargetSdkVersion() {
+                return TARGET_SDK_VERSION;
+            }
+        };
+    }
+
+    /**
+     * Unfortunately this step is required so that tests can run both from ide and the commandline.
+     * Robolectric has difficulty recognizing the manifest file from relative paths.
+     *
+     * @return The working directory from which tests are run.
+     */
+    private static String getProjectDirectory() {
+        String path = "";
+        try {
+            File file = new File(".");
+            path = file.getCanonicalPath();
+            path = path.replace("robolectric_test", ""); //name of stub project
+            path = path.replace("app", "");
+            path = path + "/app/"; //name of android project
+        } catch (IOException ignored) {
+        }
+        return path;
+    }
+}
 ```
 
-New path: `/Users/colabug/AndroidStudioProjects/Calculator/app/`, which points to the base of the project. Still not working just right.
+## Clean Up
 
+Tests weren't started, complained about the application test not being found. I'm not using it, so it dies: `/app/src/androidTest/java/com/greenlifesoftware/calculator/ApplicationTest.java`
 
+## Revert Hacks
+
+### Restore Theme
+
+Test started, got this error:
+
+```
+WARNING: no system properties value for ro.build.date.utc
+DEBUG: Loading resources for com.greenlifesoftware.calculator from /Users/colabug/AndroidStudioProjects/Calculator/app/build/intermediates/res/debug...
+DEBUG: Loading resources for android from jar:/Users/colabug/.m2/repository/org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar!/res...
+
+java.lang.IllegalStateException: You need to use a Theme.AppCompat theme (or descendant) with this activity.
+    at android.support.v7.app.ActionBarActivityDelegate.onCreate(ActionBarActivityDelegate.java:151)
+    at android.support.v7.app.ActionBarActivityDelegateBase.onCreate(ActionBarActivityDelegateBase.java:138)
+    at android.support.v7.app.ActionBarActivity.onCreate(ActionBarActivity.java:123)
+    at com.greenlifesoftware.calculator.CalculatorActivity.onCreate(CalculatorActivity.java:13)
+    at android.app.Activity.performCreate(Activity.java:5133)
+    at org.robolectric.internal.ReflectionHelpers$3.run(ReflectionHelpers.java:64)
+    ...
+Process finished with exit code 255
+```
+
+### Remove `ShadowMenuInflator`
+
+## TESTS PASS!
+
+Testing passing on the command line and in Android Studio.
+
+TODO: Make notes about how to configure the run configuration. Turn this into an easier to read saga/set of steps to help a newb get started with Robolectric. Reference my IntelliJ article as well.
+
+## Remove Emulation
+
+Take back emulation since the new test runner handles it.
+
+## Warnings
+
+These warnings remain:
+
+```
+WARNING: no system properties value for ro.build.date.utc
+DEBUG: Loading resources for com.greenlifesoftware.calculator from /Users/colabug/AndroidStudioProjects/Calculator/app/build/intermediates/res/debug...
+DEBUG: Loading resources for android from jar:/Users/colabug/.m2/repository/org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar!/res...
+Couldn't find ResName{com.greenlifesoftware.calculator:attr/colorControlNormal} in ResName{android:style/Theme_DeviceDefault}
+Couldn't find ResName{com.greenlifesoftware.calculator:attr/colorControlActivated} in ResName{android:style/Theme_DeviceDefault}
+Couldn't find ResName{com.greenlifesoftware.calculator:attr/colorControlNormal} in ResName{android:style/Theme_DeviceDefault}
+```
